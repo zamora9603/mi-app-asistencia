@@ -11,14 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build APK
-        uses: flet-dev/flet-build-action@v1
+      - name: Configurar Python
+        uses: actions/setup-python@v5
         with:
-          target: apk
-          runner-python-version: "3.12"
-          bundled-python-version: "3.12"
+          python-version: '3.11'
 
-      - name: Upload APK
+      - name: Instalar Flet y compilar
+        run: |
+          pip install flet==1.0.2
+          flet build apk --module-name main.py
+
+      - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
           name: MiApp-APK
